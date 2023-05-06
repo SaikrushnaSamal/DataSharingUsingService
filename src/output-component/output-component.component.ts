@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { DataSharingService } from '../service/dataSharingService.service';
 
 @Component({
   selector: 'app-output',
@@ -7,12 +8,18 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [FormsModule],
 })
-export class AppOutputComponent {
-  @Input() name: any;
-  @Output() data = new EventEmitter<any>();
+export class AppOutputComponent implements OnInit {
+  data: string = '';
+  constructor(private dataSharingService: DataSharingService) {}
 
-  passData() {
-    console.log('emit', this.name);
-    this.data.emit(this.name);
+  ngOnInit() {
+    this.dataSharingService.currentMessage.subscribe(
+      (message) => (this.data = message)
+    );
+  }
+
+  updateData() {
+    console.log('emit', this.data);
+    this.dataSharingService.changeMessage(this.data);
   }
 }

@@ -1,7 +1,12 @@
 Input:<br />
 
-<textarea [(ngModel)]="name" (keypress)="passData()"></textarea>
+<select (change)="updateData()" [(ngModel)]="data">
+  <option *ngFor="let fruit of fruits" [value]="fruit.name">
+    {{ fruit.name }}
+  </option>
+</select>
 
+<!-- <textarea [(ngModel)]="data" (keypress)="updateData()"></textarea> -->
 <br />
 <br />
 <br />
